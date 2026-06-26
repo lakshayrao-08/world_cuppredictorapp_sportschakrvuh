@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>World cup predictor</title>
+</head>
+<body>
+    <section>
+        <div class="section1">
+            <h1>Welcome to World cup predictor</h1>
+        </div>
+        <div class="heading">
+        <h3>
+            Select the order in which you think team will finish in the group..
+        </h3>
+        </div>
+
+<div class="g1 group-container">
+    <h2>Group A</h2>
+    <button id="button7" class="group-btn">Mexico<span class="rank"></span></button>
+    <button id="button8" class="group-btn">South Africa<span class="rank"></span></button>
+    <button id="button9" class="group-btn">South Korea<span class="rank"></span></button>
+    <button id="button10" class="group-btn">Czech Republic<span class="rank"></span></button>
+    <button id="resetButton" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group1"></ol>
+</div>
+<div class="g2 group-container">
+    <h2>Group B</h2>
+    <button id="button11" class="group-btn">Canada<span class="rank"></span></button>
+    <button id="button12" class="group-btn">Bosnia and Herzegovina<span class="rank"></span></button>
+    <button id="button13" class="group-btn">Qatar<span class="rank"></span></button>
+    <button id="button14" class="group-btn">Switzerland<span class="rank"></span></button>
+    <button id="resetButton1" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group2"></ol>
+</div>
+
+
+<div class="g3 group-container">
+    <h2>Group C</h2>
+    <button id="button15" class="group-btn">Brazil<span class="rank"></span></button>
+    <button id="button16" class="group-btn">Morocco<span class="rank"></span></button>
+    <button id="button17" class="group-btn">Haiti<span class="rank"></span></button>
+    <button id="button18" class="group-btn">Scotland<span class="rank"></span></button>
+    <button id="resetButton2" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group3"></ol>
+</div>
+
+
+<div class="g4 group-container">
+    <h2>Group D</h2>
+    <button id="button19" class="group-btn">United States<span class="rank"></span></button>
+    <button id="button20" class="group-btn">Paraguay<span class="rank"></span></button>
+    <button id="button21" class="group-btn">Australia<span class="rank"></span></button>
+    <button id="button22" class="group-btn">Turkey<span class="rank"></span></button>
+    <button id="resetButton3" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group4"></ol>
+</div>
+
+
+<div class="g5 group-container">
+    <h2>Group E</h2>
+    <button id="button23" class="group-btn">Germany<span class="rank"></span></button>
+    <button id="button24" class="group-btn">Curaçao<span class="rank"></span></button>
+    <button id="button25" class="group-btn">Ivory Coast<span class="rank"></span></button>
+    <button id="button26" class="group-btn">Ecuador<span class="rank"></span></button>
+    <button id="resetButton4" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group5"></ol>
+</div>
+
+
+<div class="g6 group-container">
+    <h2>Group F</h2>
+    <button id="button27" class="group-btn">Netherlands<span class="rank"></span></button>
+    <button id="button28" class="group-btn">Japan<span class="rank"></span></button>
+    <button id="button29" class="group-btn">Sweden<span class="rank"></span></button>
+    <button id="button30" class="group-btn">Tunisia<span class="rank"></span></button>
+    <button id="resetButton5" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group6"></ol>
+</div>
+
+
+<div class="g7 group-container">
+    <h2>Group G</h2>
+    <button id="button31" class="group-btn">Belgium<span class="rank"></span></button>
+    <button id="button32" class="group-btn">Egypt<span class="rank"></span></button>
+    <button id="button33" class="group-btn">Iran<span class="rank"></span></button>
+    <button id="button34" class="group-btn">New Zealand<span class="rank"></span></button>
+    <button id="resetButton6" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group7"></ol>
+</div>
+
+
+<div class="g8 group-container">
+    <h2>Group H</h2>
+    <button id="button35" class="group-btn">Spain<span class="rank"></span></button>
+    <button id="button36" class="group-btn">Saudi Arabia<span class="rank"></span></button>
+    <button id="button37" class="group-btn">Cape Verde<span class="rank"></span></button>
+    <button id="button38" class="group-btn">Uruguay<span class="rank"></span></button>
+    <button id="resetButton7" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group8"></ol>
+</div>
+
+
+<div class="g9 group-container">
+    <h2>Group I</h2>
+    <button id="button39" class="group-btn">France<span class="rank"></span></button>
+    <button id="button40" class="group-btn">Iraq<span class="rank"></span></button>
+    <button id="button41" class="group-btn">Senegal<span class="rank"></span></button>
+    <button id="button42" class="group-btn">Norway<span class="rank"></span></button>
+    <button id="resetButton8" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group9"></ol>
+</div>
+
+
+<div class="g10 group-container">
+    <h2>Group J</h2>
+    <button id="button43" class="group-btn">Argentina<span class="rank"></span></button>
+    <button id="button44" class="group-btn">Algeria<span class="rank"></span></button>
+    <button id="button45" class="group-btn">Austria<span class="rank"></span></button>
+    <button id="button46" class="group-btn">Jordan<span class="rank"></span></button>
+    <button id="resetButton9" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group10"></ol>
+</div>
+
+
+<div class="g11 group-container">
+    <h2>Group K</h2>
+    <button id="button47" class="group-btn">Portugal<span class="rank"></span></button>
+    <button id="button48" class="group-btn">DR Congo<span class="rank"></span></button>
+    <button id="button49" class="group-btn">Uzbekistan<span class="rank"></span></button>
+    <button id="button50" class="group-btn">Colombia<span class="rank"></span></button>
+    <button id="resetButton10" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group11"></ol>
+</div>
+
+<div class="g12 group-container">
+    <h2>Group L</h2>
+    <button id="button51" class="group-btn">England<span class="rank"></span></button>
+    <button id="button52" class="group-btn">Croatia<span class="rank"></span></button>
+    <button id="button53" class="group-btn">Ghana<span class="rank"></span></button>
+    <button id="button54" class="group-btn">Panama<span class="rank"></span></button>
+    <button id="resetButton11" style="margin-top: 20px; padding: 10px;">Reset Rankings</button>
+    <ol id="group12"></ol>
+</div>
+<h1>Choose the 3rd place winners</h1>
+<div class="T17">
+    <button id="n1" class="third-place-selector-btn">3rd Group A</button>
+    <button id="n2" class="third-place-selector-btn">3rd Group B</button>
+</div>
+
+<div class="T18">
+    <button id="n3" class="third-place-selector-btn">3rd Group C</button>
+    <button id="n4" class="third-place-selector-btn">3rd Group D</button>
+</div>
+
+<div class="T19">
+    <button id="n5" class="third-place-selector-btn">3rd Group E</button>
+    <button id="n6" class="third-place-selector-btn">3rd Group F</button>
+</div>
+
+<div class="T20">
+    <button id="n7" class="third-place-selector-btn">3rd Group G</button>
+    <button id="n8" class="third-place-selector-btn">3rd Group H</button>
+</div>
+
+<div class="T21">
+    <button id="n9" class="third-place-selector-btn">3rd Group I</button>
+    <button id="n10" class="third-place-selector-btn">3rd Group J</button>
+</div>
+
+<div class="T22">
+    <button id="n11" class="third-place-selector-btn">3rd Group K</button>
+    <button id="n12" class="third-place-selector-btn">3rd Group L</button>
+</div>
+
+<button id="resetBtn" class="reset-selector-btn">Reset </button>
+
+
+
+<div class="knockout stage">
+    <h2>
+        <span id="knockoutHeading">
+            Knockout Stage
+        </span>
+    </h2>
+    <h3>
+        <span id="knockoutHeading2">
+            Round of 32
+        </span>
+    </h3>
+    <div class="round32">
+    <!-- Match 73 -->
+    <div class="T1">
+        <button id="tn1">Runner-up Group A</button>
+        <button id="tn2">Runner-up Group B</button>
+    </div>
+
+    <!-- Match 74 -->
+    <div class="T2">
+        <button id="tn3">Winner Group C</button>
+        <button id="tn4">Runner-up Group F</button>
+    </div>
+
+    <!-- Match 75 -->
+    <div class="T3">
+        <button id="tn5">Winner Group E</button>
+        <button id="tn6">3rd Group A/B/C/D/F</button>
+    </div>
+
+    <!-- Match 76 -->
+    <div class="T4">
+        <button id="tn7">Winner Group F</button>
+        <button id="tn8">Runner-up Group C</button>
+    </div>
+
+    <!-- Match 77 -->
+    <div class="T5">
+        <button id="tn9">Runner-up Group E</button>
+        <button id="tn10">Runner-up Group I</button>
+    </div>
+
+    <!-- Match 78 -->
+    <div class="T6">
+        <button id="tn11">Winner Group I</button>
+        <button id="tn12">3rd Group C/D/F/G/H</button>
+    </div>
+
+    <!-- Match 79 -->
+    <div class="T7">
+        <button id="tn13">Winner Group A</button>
+        <button id="tn14">3rd Group C/E/F/H/I</button>
+    </div>
+
+    <!-- Match 80 -->
+    <div class="T8">
+        <button id="tn15">Winner Group L</button>
+        <button id="tn16">3rd Group E/H/I/J/K</button>
+    </div>
+
+    <!-- Match 81 -->
+    <div class="T9">
+        <button id="tn17">Winner Group G</button>
+        <button id="tn18">3rd Group A/E/H/I/J</button>
+    </div>
+
+    <!-- Match 82 -->
+    <div class="T10">
+        <button id="tn19">Winner Group D</button>
+        <button id="tn20">3rd Group B/E/F/I/J</button>
+    </div>
+
+    <!-- Match 83 -->
+    <div class="T11">
+        <button id="tn21">Winner Group H</button>
+        <button id="tn22">Runner-up Group J</button>
+    </div>
+
+    <!-- Match 84 -->
+    <div class="T12">
+        <button id="tn23">Runner-up Group K</button>
+        <button id="tn24">Runner-up Group L</button>
+    </div>
+
+    <!-- Match 85 -->
+    <div class="T13">
+        <button id="tn25">Winner Group B</button>
+        <button id="tn26">3rd Group E/F/G/I/J</button>
+    </div>
+
+    <!-- Match 86 -->
+    <div class="T14">
+        <button id="tn27">Runner-up Group D</button>
+        <button id="tn28">Runner-up Group G</button>
+    </div>
+
+    <!-- Match 87 -->
+    <div class="T15">
+        <button id="tn29">Winner Group J</button>
+        <button id="tn30">Runner-up Group H</button>
+    </div>
+
+    <!-- Match 88 -->
+    <div class="T16">
+        <button id="tn31">Winner Group K</button>
+        <button id="tn32">3rd Group D/E/I/J/L</button>
+    </div>
+</div>
+    <div id="bracketContainer">
+        <h2>
+        <span id="knockoutHeading">
+            Round of 16
+        </span>
+    </h2>
+        
+       <div class="R1">
+            <button id="btn1">
+               Winner Match 73	
+            </button>
+            <button id="btn2">
+                Winner Match 75
+            </button>
+        </div>
+        <div class="R2">
+            <button id="btn3" class="tournament-btn" data-next="#tn3">
+               Winner Match 74	
+            </button>
+            <button id="btn4">
+                Winner Match 77
+            </button>
+        </div>
+        <div class="R3">
+            <button id="btn5">
+               Winner Match 76	
+            </button>
+            <button id="btn6">
+                Winner Match 78
+            </button>
+        </div>
+        <div class="R4">
+            <button id="btn7">
+               Winner Match 79	
+            </button>
+            <button id="btn8">
+                Winner Match 80
+            </button>
+        </div>
+        <div class="R5">
+            <button id="btn9">
+               Winner Match 83
+            </button>
+            <button id="btn10">
+                Winner Match 84
+            </button>
+        </div>
+        <div class="R6">
+            <button id="btn11">
+               Winner Match 81	
+            </button>
+            <button id="btn12">
+                Winner Match 82
+            </button>
+        </div>
+        <div class="R7">
+            <button id="btn13">
+               Winner Match 86	
+            </button>
+            <button id="btn14">
+                Winner Match 88
+            </button>
+        </div>
+        <div class="R8">
+            <button id="btn15">
+               Winner Match 85	
+            </button>
+            <button id="btn16">
+                Winner Match 87
+            </button>
+        </div>
+    </div>
+    <h2>Quater Final - 1</h2>
+        <div class="qf1">
+            <button id="btn17">
+                Winner Match 89
+            </button>
+            <button id="btn18">
+                Winner Match 90
+            </button>
+        </div>
+        <h2>Quater Final - 2</h2>
+        <div class="qf2">
+            <button id="btn19">
+                Winner Match 93
+            </button>
+            <button id="btn20">
+                 Winner Match 94
+            </button>
+        </div>
+        <h2>Quater Final - 3</h2>
+        <div class="qf3">
+            <button id="btn21">
+                Winner Match 91
+            </button>
+            <button id="btn22">
+                Winner Match 92
+            </button>
+        </div>
+        <h2>Quater Final - 4</h2>
+        <div class="qf4">
+            <button id="btn23">
+                Winner Match 95
+            </button>
+            <button id="btn24">
+                 Winner Match 96
+            </button>
+        </div>
+
+
+</div>
+
+        <h2>Semi final-1</h2>
+        <div class="Sf1">
+            <button id="btn25">
+               Winner of Quaterfinal-1 
+            </button>
+            <button id="btn26">
+                Winner of Quaterfinal-2
+            </button>
+        </div>
+        <h2>Semi final-2</h2>
+        <div class="Sf2">
+            <button id="btn27">
+                Winner of Quaterfinal-3
+            </button>
+            <button id="btn28">
+                 Winner of Quaterfinal-4
+            </button>
+        </div>
+        <h2>Third place playoff</h2>
+        <div class="Sf1">
+            <button id="btn29">
+               Loser of Semi-final-1
+            </button>
+            <button id="btn30">
+              Loser of Semi-final-2
+            </button>
+        </div>
+        <h2>Final</h2>
+        <div class="final">
+            <button id="button5">
+                Winner of Semi-final-1
+            </button>
+            <button id="button6">
+                Winner of Semi-final-2
+            </button>
+        </div>
+        
+    </section>
+    <script src="script.js"></script>
+
+
+</body>
+</html>

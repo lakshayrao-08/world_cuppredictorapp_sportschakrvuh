@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQX Sports Analytics - FIFA World Cup Arena</title>
+    <style>
+        body {
+            font-family: 'Cabinet Grotesk', -apple-system, sans-serif;
+            font-size: 16px;
+            background: linear-gradient(-45deg, #020617, #0f172a, #062f19, #020617);
+            background-image: linear-gradient(to bottom, rgba(10, 15, 29, 0.85), rgba(10, 15, 29, 0.95)),
+            url('https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg');
+            background-size: 400% 400%;
+            animation: gradientAnimation 100s ease infinite;
+            background-attachment: fixed;
+            color: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-box {
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 2px solid #d4af37;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            text-align: center;
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .predictorbox {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 10px;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .predictorbox a {
+            display: inline-block;
+            text-decoration: none;
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            padding: 12px 30px;
+            text-align: center;
+            color: #ffffff;
+            background: rgba(212, 175, 55, 0.1);
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 90%;
+            animation: unmissableGlow 2.5s infinite ease-in-out;
+        }
+
+        .predictorbox a:hover {
+            background-color: #d4af37;
+            color: #000000;
+            box-shadow: 0 0 30px #d4af37;
+            transform: translateY(-3px) scale(1.05);
+            animation-play-state: paused;
+        }
+
+        @keyframes unmissableGlow {
+            0% {
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+                border-color: #d4af37;
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.3);
+                border-color: #fef08a;
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+                border-color: #d4af37;
+            }
+        }
+
+        .header-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent 49%, rgba(212, 175, 55, 0.03) 50%, transparent 51%);
+            background-size: 40px 40px;
+        }
+
+        .header-trophy {
+            width: 60px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+        }
+
+        .header-box h1 {
+            margin: 0;
+            font-size: 46px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .header-box p {
+            margin: 10px 0 0 0;
+            color: #d4af37;
+            font-size: 16px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 40px 0 20px 0;
+            color: #00ff66;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #00ff66, transparent);
+        }
+
+        .matchup-container {
+            display: grid;
+            grid-template-columns: 5fr 2fr 5fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .team-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            border-color: #00ff66;
+            box-shadow: 0 15px 40px rgba(0, 255, 102, 0.15);
+        }
+
+        .team-card h2 {
+            margin: 20px 0;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .team-a-accent { color: #3b82f6; text-shadow: 0 0 15px rgba(59,130,246,0.4); }
+        .team-b-accent { color: #ef4444; text-shadow: 0 0 15px rgba(239,68,68,0.4); }
+        
+        .team-form-highlight {
+            color: #00ff66;
+            font-weight: bold;
+        }
+
+        .vs-circle {
+            background: #020617;
+            border: 3px dashed #d4af37;
+            color: #d4af37;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 900;
+            margin: 0 auto;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+
+        select {
+            background-color: #0f172a;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px;
+            border-radius: 8px;
+            width: 95%;
+            font-size: 16px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        select:focus {
+            border-color: #00ff66;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 25px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 4px solid #3b82f6;
+            backdrop-filter: blur(12px);
+        }
+
+        .metric-card.center-card {
+            border-top-color: #d4af37;
+        }
+
+        .metric-card.right-card {
+            border-top-color: #ef4444;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .tactical-star-color {
+            color: #d4af37;
+        }
+
+        .simulate-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #856404 100%);
+            color: #020617;
+            border: none;
+            padding: 20px;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .simulate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 45px rgba(212, 175, 55, 0.6);
+        }
+
+        .prediction-panel {
+            background: rgba(15, 23, 42, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #d4af37;
+            margin-top: 40px;
+            display: none;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .prediction-panel h3 {
+            margin: 0 0 30px 0;
+            color: #d4af37;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+
+        .weight-800 {
+            font-weight: 800;
+        }
+
+        .color-win-a { color: #3b82f6; }
+        .color-draw { color: #34d399; }
+        .color-win-b { color: #ef4444; }
+
+        .bar-container {
+            background-color: #020617;
+            border-radius: 12px;
+            height: 28px;
+            width: 100%;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        .fill-win-a { background-color: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+        .fill-draw { background-color: #34d399; box-shadow: 0 0 10px #34d399; }
+        .fill-win-b { background-color: #ef4444; box-shadow: 0 0 10px #ef4444; }
+
+        .insight-box {
+            background-color: rgba(212, 175, 55, 0.05);
+            border-left: 5px solid #d4af37;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 22px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 30px;
+            color: #34d399;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-box">
+        <h1>AQX SPORTS ANALYTICS LAB</h1>
+        <p>FIFA World Cup 2026 Tactical Simulation Engine</p>
+    </div>
+    
+    <div class="predictorbox">
+        <a href="predictor.html">🔮 LIVE: WORLD CUP PREDICTOR</a>
+    </div>
+    
+    <div class="section-title">⚽ Pitch Lineup Selection</div>
+    <div class="matchup-container">
+        <div class="team-card">
+            <select id="teamASelect" onchange="handleSelection()"></select>
+            <h2 id="teamAName" class="team-a-accent">-</h2>
+            <div id="teamAForm">-</div>
+        </div>
+        
+        <div>
+            <div class="vs-circle">VS</div>
+        </div>
+        
+        <div class="team-card">
+            <select id="teamBSelect" onchange="handleSelection()"></select>
+            <h2 id="teamBName" class="team-b-accent">-</h2>
+            <div id="teamBForm">-</div>
+        </div>
+    </div>
+
+    <div class="section-title">📊 Tactical Grid Metrics</div>
+
+    <div class="matrix-grid">
+        <div class="metric-card">
+            <h4 id="metricHeadA" style="margin: 0 0 10px 0; color: #3182ce;">-</h4>
+            <div class="metric-row">
+                <div class="metric-label">FIFA World Rank</div>
+                <div class="metric-value" id="rankA">-</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-label">Expected Goals (xG)</div>
+                <div class="metric-value" id="xgA">-</div>
+            </div>
+        </div>
+
+        <div class="metric-card center-card">
+            <div class="metric-row">
+                <div class="metric-label">Key Tactical Matchup</div>
+                <div class="metric-value tactical-star-color" id="tacticalMatch">-</div>
+            </div>
+        </div>
+
+        <div class="metric-card right-card">
+            <h4 id="metricHeadB" style="margin: 0 0 10px 0; color: #e53e3e;">-</h4>
+            <div class="metric-row">
+                <div class="metric-label">FIFA World Rank</div>
+                <div class="metric-value" id="rankB">-</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-label">Expected Goals (xG)</div>
+                <div class="metric-value" id="xgB">-</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="simulate-btn" onclick="triggerPythonAPI()">RUN PREDICTIVE SIMULATION</button>
+
+    <div id="errorPanel" style="display: none; background: rgba(220, 38, 38, 0.2); border: 1px solid #dc2626; color: #fca5a5; padding: 15px; margin: 20px 0; border-radius: 8px; font-size: 14px; text-align: center; font-weight: 700;"></div>
+
+    <div id="predictionPanel" class="prediction-panel">
+        <h3>📊 AQX Engine Probability Output</h3>
+        
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span id="labelWinA" class="weight-800">-</span>
+                <span id="valWinA" class="color-win-a weight-800">-</span>
+            </div>
+            <div class="bar-container">
+                <div id="barWinA" class="bar-fill fill-win-a"></div>
+            </div>
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span class="weight-800">Tactical Draw Probability</span>
+                <span id="valDraw" class="color-draw weight-800">-</span>
+            </div>
+            <div class="bar-container">
+                <div id="barDraw" class="bar-fill fill-draw"></div>
+            </div>
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span id="labelWinB" class="weight-800">-</span>
+                <span id="valWinB" class="color-win-b weight-800">-</span>
+            </div>
+            <div class="bar-container">
+                <div id="barWinB" class="bar-fill fill-win-b"></div>
+            </div>
+        </div>
+
+        <div id="analyticsSection" style="margin-top:30px; display:none; background:rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); padding:25px; border-radius:14px; color:#fff;">
+            <h3>📊 Advanced Sports Analytics Dashboard</h3>
+            
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:700; color:#94a3b8; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">Squad Valuation Comparison:</label>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; margin-top:5px;">
+                    <span id="labelValA" style="font-weight:600;">Team A</span>
+                    <span id="labelValB" style="font-weight:600;">Team B</span>
+                </div>
+                <div style="background:#020617; height:20px; border-radius:10px; overflow:hidden; display:flex; border: 1px solid rgba(255,255,255,0.05);">
+                    <div id="mapValA" style="background:#3182ce; width:50%; transition:width 0.5s;"></div>
+                    <div id="mapValB" style="background:#e53e3e; width:50%; transition:width 0.5s;"></div>
+                </div>
+                <p style="font-size:13px; color:#94a3b8; margin-top:8px;">Economic Disparity Gap: <span id="economicGap" style="color:#ffffff; font-weight:bold;">0</span></p>
+            </div>
+
+            <div style="margin-bottom:15px;">
+                <label style="font-weight:700; color:#94a3b8; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">Attacking Output Map (Last 4 Years Goals):</label>
+                <div style="display:flex; height:140px; align-items:flex-end; gap:20px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <div style="display:flex; flex-direction:column; align-items:center; width:50%;">
+                        <div id="barGoalsA" style="background:#3182ce; width:45px; height:0px; transition:height 0.5s; border-radius:6px 6px 0 0; box-shadow: 0 0 15px rgba(49,130,206,0.3);"></div>
+                        <span id="txtGoalsA" style="font-size:13px; margin-top:8px; font-weight:600; text-align:center;">0</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; width:50%;">
+                        <div id="barGoalsB" style="background:#e53e3e; width:45px; height:0px; transition:height 0.5s; border-radius:6px 6px 0 0; box-shadow: 0 0 15px rgba(229,62,62,0.3);"></div>
+                        <span id="txtGoalsB" style="font-size:13px; margin-top:8px; font-weight:600; text-align:center;">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:25px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05);">
+                <label style="font-weight:700; color:#94a3b8; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">AI Decision Metric Weights (Gini Importance):</label>
+                
+                <div style="font-size:13px; margin:10px 0 5px 0; display:flex; justify-content:space-between;">
+                    <span>FIFA Rank Impact</span>
+                    <span id="pctRank" style="font-weight:700; color:#34d399;">0%</span>
+                </div>
+                <div style="background:#020617; height:8px; border-radius:4px;"><div id="weightRank" style="background:#34d399; height:100%; width:0%; border-radius:4px; transition:width 0.5s;"></div></div>
+                
+                <div style="font-size:13px; margin:15px 0 5px 0; display:flex; justify-content:space-between;">
+                    <span>Market Value Impact</span>
+                    <span id="pctValue" style="font-weight:700; color:#34d399;">0%</span>
+                </div>
+                <div style="background:#020617; height:8px; border-radius:4px;"><div id="weightValue" style="background:#34d399; height:100%; width:0%; border-radius:4px; transition:width 0.5s;"></div></div>
+                
+                <div style="font-size:13px; margin:15px 0 5px 0; display:flex; justify-content:space-between;">
+                    <span>Goals Trend Impact</span>
+                    <span id="pctGoals" style="font-weight:700; color:#34d399;">0%</span>
+                </div>
+                <div style="background:#020617; height:8px; border-radius:4px;"><div id="weightGoals" style="background:#34d399; height:100%; width:0%; border-radius:4px; transition:width 0.5s;"></div></div>
+            </div>
+
+            <div id="insightDeck" class="insight-box" style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.02); border-left: 4px solid #34d399;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const teamDataset = {
+    'Argentina': {rank: 1, form: 'W-W-W-D-W', xg: 2.4, h2h: 5, star: 'L. Messi'},
+    'France': {rank: 2, form: 'W-L-W-W-D', xg: 2.2, h2h: 4, star: 'K. Mbappé'},
+    'Spain': {rank: 3, form: 'W-W-W-W-W', xg: 2.6, h2h: 4, star: 'L. Yamal'},
+    'England': {rank: 4, form: 'D-W-W-L-D', xg: 1.9, h2h: 3, star: 'J. Bellingham'},
+    'Brazil': {rank: 5, form: 'W-D-L-W-W', xg: 2.0, h2h: 5, star: 'Vinícius Jr.'},
+    'Belgium': {rank: 6, form: 'L-W-D-W-L', xg: 1.8, h2h: 3, star: 'K. De Bruyne'},
+    'Portugal': {rank: 7, form: 'W-W-W-W-L', xg: 2.5, h2h: 3, star: 'B. Fernandes'},
+    'Netherlands': {rank: 8, form: 'W-D-W-L-W', xg: 2.1, h2h: 3, star: 'V. van Dijk'},
+    'Italy': {rank: 9, form: 'W-D-W-W-L', xg: 1.7, h2h: 4, star: 'N. Barella'},
+    'Colombia': {rank: 10, form: 'W-W-L-W-D', xg: 1.9, h2h: 2, star: 'L. Díaz'},
+    'Germany': {rank: 11, form: 'W-W-D-W-W', xg: 2.1, h2h: 4, star: 'F. Wirtz'},
+    'Croatia': {rank: 12, form: 'D-W-L-D-W', xg: 1.6, h2h: 3, star: 'L. Modrić'},
+    'Morocco': {rank: 13, form: 'D-W-L-W-D', xg: 1.4, h2h: 2, star: 'A. Hakimi'},
+    'Uruguay': {rank: 14, form: 'L-W-D-W-L', xg: 1.8, h2h: 3, star: 'F. Valverde'},
+    'Japan': {rank: 15, form: 'W-W-W-D-W', xg: 2.0, h2h: 2, star: 'K. Mitoma'},
+    'USA': {rank: 16, form: 'D-L-W-W-D', xg: 1.6, h2h: 3, star: 'C. Pulisic'},
+    'Mexico': {rank: 17, form: 'W-D-L-D-W', xg: 1.5, h2h: 3, star: 'S. Giménez'},
+    'Senegal': {rank: 18, form: 'W-W-D-L-W', xg: 1.6, h2h: 2, star: 'S. Mané'},
+    'Iran': {rank: 19, form: 'W-W-D-W-L', xg: 1.7, h2h: 1, star: 'M. Taremi'},
+    'Denmark': {rank: 20, form: 'D-L-W-D-W', xg: 1.5, h2h: 2, star: 'C. Eriksen'},
+    'South Korea': {rank: 22, form: 'W-D-W-W-D', xg: 1.8, h2h: 2, star: 'Heung-min Son'},
+    'Australia': {rank: 24, form: 'D-W-W-L-D', xg: 1.4, h2h: 2, star: 'J. Irvine'},
+    'Ukraine': {rank: 25, form: 'W-L-D-W-W', xg: 1.6, h2h: 1, star: 'A. Dovbyk'},
+    'Austria': {rank: 26, form: 'W-W-L-W-D', xg: 1.7, h2h: 2, star: 'D. Alaba'},
+    'Sweden': {rank: 28, form: 'W-W-D-L-W', xg: 1.8, h2h: 2, star: 'V. Gyökeres'},
+    'Poland': {rank: 30, form: 'L-W-D-L-D', xg: 1.3, h2h: 2, star: 'R. Lewandowski'},
+    'Hungary': {rank: 32, form: 'D-W-L-W-W', xg: 1.4, h2h: 1, star: 'D. Szoboszlai'},
+    'Nigeria': {rank: 36, form: 'W-L-D-W-L', xg: 1.5, h2h: 2, star: 'V. Osimhen'},
+    'Ecuador': {rank: 38, form: 'W-D-W-L-D', xg: 1.4, h2h: 2, star: 'M. Caicedo'},
+    'Peru': {rank: 42, form: 'L-D-W-L-D', xg: 1.1, h2h: 2, star: 'L. Advíncula'},
+    'Chile': {rank: 43, form: 'L-L-W-D-L', xg: 1.2, h2h: 2, star: 'A. Sanchez'},
+    'Canada': {rank: 45, form: 'D-W-L-W-D', xg: 1.5, h2h: 1, star: 'A. Davies'},
+    'Egypt': {rank: 46, form: 'W-W-D-W-L', xg: 1.6, h2h: 2, star: 'M. Salah'},
+    'Cameroon': {rank: 49, form: 'D-W-L-D-W', xg: 1.3, h2h: 2, star: 'B. Mbeumo'},
+    'Ivory Coast': {rank: 50, form: 'W-D-W-W-L', xg: 1.5, h2h: 2, star: 'S. Adingra'},
+    'Costa Rica': {rank: 52, form: 'L-W-D-L-W', xg: 1.1, h2h: 1, star: 'M. Ugalde'},
+    'Saudi Arabia': {rank: 53, form: 'W-L-D-W-D', xg: 1.3, h2h: 1, star: 'S. Al-Dawsari'},
+    'Mali': {rank: 54, form: 'D-W-W-L-D', xg: 1.2, h2h: 1, star: 'Y. Bissouma'},
+    'Qatar': {rank: 56, form: 'W-W-L-D-W', xg: 1.4, h2h: 1, star: 'A. Afif'},
+    'Panama': {rank: 58, form: 'W-L-W-D-L', xg: 1.2, h2h: 1, star: 'A. Carrasquilla'},
+    'Ghana': {rank: 60, form: 'D-L-W-W-L', xg: 1.3, h2h: 2, star: 'M. Kudus'},
+    'Iraq': {rank: 62, form: 'W-W-D-L-W', xg: 1.4, h2h: 1, star: 'A. Hussein'},
+    'Jamaica': {rank: 63, form: 'L-W-D-W-D', xg: 1.1, h2h: 1, star: 'L. Bailey'},
+    'South Africa': {rank: 65, form: 'W-D-L-W-D', xg: 1.2, h2h: 1, star: 'P. Tau'},
+    'Uzbekistan': {rank: 66, form: 'W-W-D-W-L', xg: 1.3, h2h: 1, star: 'E. Shomurodov'},
+    'Oman': {rank: 70, form: 'L-W-D-L-W', xg: 1.0, h2h: 1, star: 'S. Al-Yahyaei'},
+    'New Zealand': {rank: 85, form: 'W-D-W-L-D', xg: 1.1, h2h: 1, star: 'C. Wood'},
+    'Fiji': {rank: 145, form: 'L-D-L-W-D', xg: 0.8, h2h: 0, star: 'R. Krishna'}
+};
+
+const selA = document.getElementById('teamASelect');
+const selB = document.getElementById('teamBSelect');
+
+Object.keys(teamDataset).forEach((team, idx) => {
+    let oA = document.createElement('option');
+    oA.value = team; oA.innerText = team;
+    selA.appendChild(oA);
+
+    let oB = document.createElement('option');
+    oB.value = team; oB.innerText = team;
+    if(idx === 1) oB.selected = true;
+    selB.appendChild(oB);
+});
+
+function handleSelection() {
+    const tA = selA.value;
+    const tB = selB.value;
+
+    document.getElementById('teamAName').innerText = tA;
+    document.getElementById('teamBName').innerText = tB;
+    document.getElementById('metricHeadA').innerText = tA;
+    document.getElementById('metricHeadB').innerText = tB;
+    
+    document.getElementById('teamAForm').innerHTML = `Form: <span class="team-form-highlight">${teamDataset[tA].form}</span>`;
+    document.getElementById('teamBForm').innerHTML = `Form: <span class="team-form-highlight">${teamDataset[tB].form}</span>`;
+
+    document.getElementById('rankA').innerText = `#${teamDataset[tA].rank}`;
+    document.getElementById('xgA').innerText = teamDataset[tA].xg;
+    document.getElementById('rankB').innerText = `#${teamDataset[tB].rank}`;
+    document.getElementById('xgB').innerText = teamDataset[tB].xg;
+    document.getElementById('tacticalMatch').innerText = `${teamDataset[tA].star} / ${teamDataset[tB].star}`;
+
+    document.getElementById('predictionPanel').style.display = 'none';
+    document.getElementById('errorPanel').style.display = 'none';
+}
+
+function renderUIElements(tA, tB, data) {
+    const panel = document.getElementById('predictionPanel');
+    
+    document.getElementById('labelWinA').innerText = `${tA} Victory Probability`;
+    document.getElementById('valWinA').innerText = `${data.winA}%`;
+    document.getElementById('barWinA').style.width = `${data.winA}%`;
+
+    document.getElementById('valDraw').innerText = `${data.draw}%`;
+    document.getElementById('barDraw').style.width = `${data.draw}%`;
+
+    document.getElementById('labelWinB').innerText = `${tB} Victory Probability`;
+    document.getElementById('valWinB').innerText = `${data.winB}%`;
+    document.getElementById('barWinB').style.width = `${data.winB}%`;
+
+    document.getElementById('analyticsSection').style.display = 'block';
+
+    document.getElementById('labelValA').innerText = `${tA}: ${data.analytics.teamA_val}`;
+    document.getElementById('labelValB').innerText = `${tB}: ${data.analytics.teamB_val}`;
+    document.getElementById('economicGap').innerText = data.analytics.financial_gap;
+
+    let vA = parseFloat(data.analytics.teamA_val) || 0;
+    let vB = parseFloat(data.analytics.teamB_val) || 0;
+    let totalVal = (vA + vB) || 1;
+    document.getElementById('mapValA').style.width = `${(vA / totalVal) * 100}%`;
+    document.getElementById('mapValB').style.width = `${(vB / totalVal) * 100}%`;
+
+    let gA = parseInt(data.analytics.goalsA) || 0;
+    let gB = parseInt(data.analytics.goalsB) || 0;
+    let maxGoals = Math.max(gA, gB, 1);
+    document.getElementById('barGoalsA').style.height = `${(gA / maxGoals) * 80}px`;
+    document.getElementById('barGoalsB').style.height = `${(gB / maxGoals) * 80}px`;
+    document.getElementById('txtGoalsA').innerText = `${tA} (${gA} Goals)`;
+    document.getElementById('txtGoalsB').innerText = `${tB} (${gB} Goals)`;
+
+    document.getElementById('pctRank').innerText = `${data.analytics.importance_rank}%`;
+    document.getElementById('weightRank').style.width = `${data.analytics.importance_rank}%`;
+    document.getElementById('pctValue').innerText = `${data.analytics.importance_value}%`;
+    document.getElementById('weightValue').style.width = `${data.analytics.importance_value}%`;
+    document.getElementById('pctGoals').innerText = `${data.analytics.importance_goals}%`;
+    document.getElementById('weightGoals').style.width = `${data.analytics.importance_goals}%`;
+    
+    if(document.getElementById('winA-display')) document.getElementById('winA-display').innerText = data.winA + '%';
+    if(document.getElementById('draw-display')) document.getElementById('draw-display').innerText = data.draw + '%';
+    if(document.getElementById('winB-display')) document.getElementById('winB-display').innerText = data.winB + '%';
+    if(document.getElementById('insight-text')) document.getElementById('insight-text').innerText = data.insight;
+    
+    document.getElementById('insightDeck').innerHTML = `⚽ <b>Tactical Breakdown:</b> ${data.insight}`;
+    panel.style.display = 'block';
+}
+
+function generateFallbackData(tA, tB) {
+    let rA = teamDataset[tA].rank;
+    let rB = teamDataset[tB].rank;
+    
+    let baseA = 45.0;
+    let baseB = 40.0;
+    
+    if (rA < rB) {
+        baseA += 3.5;
+        baseB -= 3.5;
+    } else if (rB < rA) {
+        baseB += 3.5;
+        baseA -= 3.5;
+    }
+    
+    let baseD = 100.0 - baseA - baseB;
+    
+    let mockValA = Math.round((800 - (rA * 5)) * 1.3);
+    let mockValB = Math.round((800 - (rB * 5)) * 1.3);
+    if(mockValA < 40) mockValA = 45;
+    if(mockValB < 40) mockValB = 42;
+    
+    let gap = Math.abs(mockValA - mockValB);
+    
+    let fallback = {
+        'winA': Math.round(baseA * 10) / 10,
+        'draw': Math.round(baseD * 10) / 10,
+        'winB': Math.round(baseB * 10) / 10,
+        'insight': `Local Client Calculation Mode: Analytical matrix indicates a highly optimized matchup profile. ${tA} holding steady squad infrastructure relative to tactical counters deployed by ${tB}.`,
+        'analytics': {
+            'teamA_val': `${mockValA}M EUR`,
+            'teamB_val': `${mockValB}M EUR`,
+            'financial_gap': `${gap}M EUR`,
+            'importance_rank': 33.3,
+            'importance_value': 41.2,
+            'importance_goals': 25.5,
+            'goalsA': Math.round(teamDataset[tA].xg * 7),
+            'goalsB': Math.round(teamDataset[tB].xg * 7),
+            'rankA': rA,
+            'rankB': rB
+        }
+    };
+    return fallback;
+}
+
+function triggerPythonAPI() {
+    const tA = selA.value;
+    const tB = selB.value;
+    const err = document.getElementById('errorPanel');
+    const panel = document.getElementById('predictionPanel');
+
+    if (tA === tB) {
+        panel.style.display = 'none';
+        err.innerText = "Validation Matchup Error: A squad cannot execute a tactical simulation against itself.";
+        err.style.display = 'block';
+        return;
+    }
+    
+    err.style.display = 'none';
+
+    fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            teamA: tA, 
+            teamB: tB
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Server returned error status.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            console.warn("Backend validation constraint intercepted:", data.error);
+            let fallback = generateFallbackData(tA, tB);
+            renderUIElements(tA, tB, fallback);
+            return;
+        }
+        renderUIElements(tA, tB, data);
+    })
+    .catch(error => {
+        console.log("Flask Server is offline. Initiating Frontend Analytics Engine fallback simulation...");
+        let fallback = generateFallbackData(tA, tB);
+        renderUIElements(tA, tB, fallback);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.querySelector('button') || document.getElementById('run-btn');
+    if(btn) {
+        btn.onclick = function(e) {
+            e.preventDefault();
+            triggerPythonAPI();
+        };
+    }
+    selA.addEventListener('change', handleSelection);
+    selB.addEventListener('change', handleSelection);
+    handleSelection();
+});
+</script>
+</body>
+</html>
